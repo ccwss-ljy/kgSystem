@@ -1,16 +1,12 @@
 <template>
   <div id="app">
-    <MyLogin/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import MyLogin from "./components/MyLogin.vue";
 export default {
   name: "App",
-  components: {
-    MyLogin
-},
 };
 </script>
 

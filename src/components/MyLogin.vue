@@ -3,12 +3,14 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span class="title">基于知识图谱的教学系统用户登录</span>
-        <el-button style="float: right; padding: 5px 10px" type="text"
-          >注册</el-button
-        >
+        <el-button style="float: right; padding: 5px 10px" type="text">
+          注册
+        </el-button>
       </div>
-      <div class="left"></div>
-      <div class="right">
+      <!-- 登录窗口左边图片 -->
+      <div class="box-card_left"></div>
+      <!-- 登录窗口右边表单 -->
+      <div class="box-card_right">
         <el-form ref="form" :model="form" label-width="80px" :rules="rules">
           <el-form-item label="用户名" prop="username">
             <el-input
@@ -35,35 +37,36 @@
 
 <script>
 export default {
+  name: "MyLogin",
   data() {
+    // 名字检测
     let checkUsername = (rule, value, callback) => {
-        if(!value){
-            callback(new Error('用户名不能为空'))
-        }
-        else if(value.search(/[!@#$%^&*()<>?]/) != -1){
-            callback(new Error('用户名的特殊字符只能存在_'))
-        }
-        else{
-            callback()
-        }
+      if (!value) {
+        callback(new Error("用户名不能为空"));
+      } else if (value.search(/[!@#$%^&*()<>?]/) != -1) {
+        callback(new Error("用户名的特殊字符只能存在_"));
+      } else {
+        callback();
+      }
     };
+    // 密码检测
     let checkPassword = (rule, value, callback) => {
-        if(!value){
-            callback(new Error('密码不能为空'))
-        }
-        else if(value.length < 6){
-            callback(new Error('密码不能小于6位'))
-        }
-        else{
-            callback();
-        }
+      if (!value) {
+        callback(new Error("密码不能为空"));
+      } else if (value.length < 6) {
+        callback(new Error("密码不能小于6位"));
+      } else {
+        callback();
+      }
     };
 
     return {
+      // 表单中属性
       form: {
         username: "",
         password: "",
       },
+      // 检测规则
       rules: {
         username: [{ validator: checkUsername, trigger: "blur" }],
         password: [{ validator: checkPassword, trigger: "blur" }],
@@ -71,16 +74,19 @@ export default {
     };
   },
   methods: {
+    // 提交表单
     onSubmit(formName) {
-        this.$refs[formName].validate((valid, obj)=>{
-            console.log(valid)
-            if(valid){
-                console.log("前端过滤通过，调接口")
-            }
-            else{
-                console.log('未通过字段', obj)
-            }
-        })
+      this.$refs[formName].validate((valid, obj) => {
+        console.log(valid);
+        if (valid) {
+          console.log("前端过滤通过，调接口");
+          this.$router.push({
+            path:'/home'
+          })
+        } else {
+          console.log("未通过字段", obj);
+        }
+      });
     },
   },
 };
@@ -116,7 +122,7 @@ export default {
   display: flex;
 }
 
-.left {
+.box-card_left {
   flex: 1 1 400px;
   height: 100%;
   background-image: url(../assets/loginLeft.webp);
@@ -125,7 +131,7 @@ export default {
   background-repeat: no-repeat;
 }
 
-.right {
+.box-card_right {
   padding: 30px 0;
   flex: 1 1 400px;
 }
