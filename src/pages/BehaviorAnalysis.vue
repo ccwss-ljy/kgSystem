@@ -1,5 +1,5 @@
 <template>
-  <h2>行为分析</h2>
+  <router-view></router-view>
 </template>
 
 <script>

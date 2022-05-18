@@ -4,21 +4,21 @@
       :options="options"
       :level-options="levelOptions"
       phValue1="请选择年级"
-      phValue2="请选择试卷类型"
-      phValue3="请输入试卷名"
-      page-type="6"
+      phValue2="请选择题目类型"
+      phValue3="请输入学生姓名"
     />
-    <MyTable page-type="6"/>
+    <MyTable page-type="4" />
   </div>
 </template>
 
 <script>
-import MyTable from "@/components/MyTable.vue";
 import MyHeader from "@/components/MyHeader.vue";
+import MyTable from "@/components/MyTable.vue";
+
 export default {
   components: {
-    MyTable,
     MyHeader,
+    MyTable,
   },
   data() {
     return {
@@ -39,19 +39,19 @@ export default {
       levelOptions: [
         {
           value: "1",
-          label: "期末试卷",
+          label: "编程题",
         },
         {
           value: "2",
-          label: "期中试卷",
+          label: "选择题",
         },
         {
           value: "3",
-          label: "随堂测试",
+          label: "填空题",
         },
         {
           value: "4",
-          label: "章节测试",
+          label: "简答题",
         },
       ],
     };

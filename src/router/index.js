@@ -10,10 +10,6 @@ import ExerciseMark from '../pages/ExerciseMark' //习题标注
 
 import ViewExercise from '../pages/ViewExercise' //查看习题
 
-import BehaviorAnalysis from '../pages/BehaviorAnalysis' //行为分析
-
-import ViewExam from '../pages/ViewExam' //查看试卷
-
 import ExerciseAll from '../pages/ExerciseAll' //所有试题
 
 import ExerciseUnMark from '../pages/ExerciseUnMark' //未标注
@@ -21,6 +17,18 @@ import ExerciseUnMark from '../pages/ExerciseUnMark' //未标注
 import ExerciseMarking from '../pages/ExerciseMarking' //待审核
 
 import ExerciseMarked from '../pages/ExerciseMarked' //审核通过
+
+import BehaviorAnalysis from '../pages/BehaviorAnalysis' //行为分析
+
+import TestRecord from '../pages/TestRecord' //测试记录
+
+import AnswerRecord from '../pages/AnswerRecord' //答题记录
+
+import ReasonAnalysis from '../pages/ReasonAnalysis' //因果分析
+
+import ViewExam from '../pages/ViewExam' //查看试卷
+
+
 
 const router = new VueRouter({
     routes: [
@@ -83,7 +91,21 @@ const router = new VueRouter({
                 // 行为分析
                 {
                     path: 'behavioranalysis',
-                    component: BehaviorAnalysis
+                    component: BehaviorAnalysis,
+                    children:[
+                        {
+                            path:'testrecord',
+                            component:TestRecord
+                        },
+                        {
+                            path:'answerrecord',
+                            component:AnswerRecord
+                        },
+                        {
+                            path:'reasonanalysis',
+                            component:ReasonAnalysis
+                        }
+                    ]
                 },
                 // 查看试卷
                 {

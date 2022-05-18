@@ -12,10 +12,25 @@
       <!-- 按钮框 -->
       <div class="MyIndex_right">
         <el-button>下载模板</el-button>
-        <el-button>导入试题</el-button>
+        <el-button @click="dialogVisible = true">导入试题</el-button>
         <el-button>导入答题记录</el-button>
         <el-button type="text" style="color: white">退出</el-button>
       </div>
+      <!-- 对话框 -->
+      <el-dialog
+        title="提示"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose"
+      >
+        <span>这是一段信息</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogVisible = false"
+            >确 定</el-button
+          >
+        </span>
+      </el-dialog>
     </el-header>
     <el-container>
       <!-- 导航栏 -->
@@ -36,16 +51,42 @@
           </el-menu-item>
           <el-submenu index="/home/viewexercise">
             <template slot="title"> 查看习题 </template>
-            <el-menu-item index="/home/viewexercise/exerciseall" class="subMenu" >所有试题</el-menu-item>
-            <el-menu-item index="/home/viewexercise/exerciseunmark" class="subMenu">未标注</el-menu-item>
-            <el-menu-item index="/home/viewexercise/exercisemarking" class="subMenu">待审核</el-menu-item>
-            <el-menu-item index="/home/viewexercise/exercisemarked" class="subMenu">审核通过</el-menu-item>
+            <el-menu-item index="/home/viewexercise/exerciseall" class="subMenu"
+              >所有试题</el-menu-item
+            >
+            <el-menu-item
+              index="/home/viewexercise/exerciseunmark"
+              class="subMenu"
+              >未标注</el-menu-item
+            >
+            <el-menu-item
+              index="/home/viewexercise/exercisemarking"
+              class="subMenu"
+              >待审核</el-menu-item
+            >
+            <el-menu-item
+              index="/home/viewexercise/exercisemarked"
+              class="subMenu"
+              >审核通过</el-menu-item
+            >
           </el-submenu>
           <el-submenu index="/home/behavioranalysis">
             <template slot="title"> 行为分析 </template>
-            <el-menu-item index="4-1" class="subMenu">测试记录</el-menu-item>
-            <el-menu-item index="4-2" class="subMenu">答题记录</el-menu-item>
-            <el-menu-item index="4-3" class="subMenu">因果分析</el-menu-item>
+            <el-menu-item
+              index="/home/behavioranalysis/testrecord"
+              class="subMenu"
+              >测试记录</el-menu-item
+            >
+            <el-menu-item
+              index="/home/behavioranalysis/answerrecord"
+              class="subMenu"
+              >答题记录</el-menu-item
+            >
+            <el-menu-item
+              index="/home/behavioranalysis/reasonanalysis"
+              class="subMenu"
+              >因果分析</el-menu-item
+            >
           </el-submenu>
           <el-menu-item index="/home/viewexam">
             <template slot="title"> 查看试卷 </template>
@@ -54,7 +95,7 @@
       </el-aside>
       <!-- 内容区 -->
       <el-main class="l-main">
-          <router-view></router-view>
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -62,6 +103,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      dialogVisible: false,
+    };
+  },
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -123,8 +169,8 @@ export default {
   text-align: center;
 }
 
-.subMenu{
-    background-color:#fff;
+.subMenu {
+  background-color: #fff;
 }
 
 /* 内容区 */
@@ -132,9 +178,9 @@ export default {
   background-color: #fff;
   text-align: center;
 }
-.l-main{
+.l-main {
   /* 开启BFC */
-  overflow: hidden; 
+  overflow: hidden;
   position: relative;
   padding: 40px 50px;
 }
