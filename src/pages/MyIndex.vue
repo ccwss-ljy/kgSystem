@@ -36,10 +36,10 @@
           </el-menu-item>
           <el-submenu index="/home/viewexercise">
             <template slot="title"> 查看习题 </template>
-            <el-menu-item index="3-1" class="subMenu" >所有试题</el-menu-item>
-            <el-menu-item index="3-2" class="subMenu">未标注</el-menu-item>
-            <el-menu-item index="3-3" class="subMenu">待审核</el-menu-item>
-            <el-menu-item index="3-4" class="subMenu">审核通过</el-menu-item>
+            <el-menu-item index="/home/viewexercise/exerciseall" class="subMenu" >所有试题</el-menu-item>
+            <el-menu-item index="/home/viewexercise/exerciseunmark" class="subMenu">未标注</el-menu-item>
+            <el-menu-item index="/home/viewexercise/exercisemarking" class="subMenu">待审核</el-menu-item>
+            <el-menu-item index="/home/viewexercise/exercisemarked" class="subMenu">审核通过</el-menu-item>
           </el-submenu>
           <el-submenu index="/home/behavioranalysis">
             <template slot="title"> 行为分析 </template>
@@ -53,7 +53,7 @@
         </el-menu>
       </el-aside>
       <!-- 内容区 -->
-      <el-main>
+      <el-main class="l-main">
           <router-view></router-view>
       </el-main>
     </el-container>
@@ -131,5 +131,11 @@ export default {
 .el-main {
   background-color: #fff;
   text-align: center;
+}
+.l-main{
+  /* 开启BFC */
+  overflow: hidden; 
+  position: relative;
+  padding: 40px 50px;
 }
 </style>
