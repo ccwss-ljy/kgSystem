@@ -5,6 +5,7 @@
       :data="tableData"
       style="width: 100%"
       :header-cell-style="{ textAlign: 'center' }"
+      :cell-style="{ textAlign: 'center' }"
       :border="true"
       height="400"
     >
@@ -74,78 +75,98 @@
           <span style="margin-left: 10px">{{ scope.row.isChecker }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="编号" width="100" v-if="pageType == 6">
+      <el-table-column label="编号" width="80" v-if="pageType == 6">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="测试时间" width="200" v-if="pageType == 6">
+      <el-table-column label="测试时间" width="150" v-if="pageType == 6">
+        <template slot-scope="scope">
+          <span style="margin-left: 10px">{{ scope.row.time }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="学号"
+        width="200"
+        v-if="pageType == 4 || pageType == 5"
+      >
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="学号" width="200" v-if="pageType == 4 || pageType == 5">
+      <el-table-column
+        label="姓名"
+        width="100"
+        v-if="pageType == 4 || pageType == 5"
+      >
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.id }}</span>
+          <span style="margin-left: 10px">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="姓名" width="100" v-if="pageType == 4 || pageType == 5">
+      <el-table-column
+        label="年级"
+        width="120"
+        v-if="pageType == 4 || pageType == 6"
+      >
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.id }}</span>
+          <span style="margin-left: 10px">{{ scope.row.grade }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="年级" width="120" v-if="pageType == 4 || pageType == 6">
+      <el-table-column
+        label="专业"
+        width="200"
+        v-if="pageType == 4 || pageType == 6"
+      >
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.id }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="专业" width="200" v-if="pageType == 4 || pageType == 6">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.id }}</span>
+          <span style="margin-left: 10px">{{ scope.row.major }}</span>
         </template>
       </el-table-column>
       <el-table-column label="试卷id" width="100" v-if="pageType == 4">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.id }}</span>
+          <span style="margin-left: 10px">{{ scope.row.eid }}</span>
         </template>
       </el-table-column>
       <el-table-column label="题号" width="100" v-if="pageType == 5">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.id }}</span>
+          <span style="margin-left: 10px">{{ scope.row.qid }}</span>
         </template>
       </el-table-column>
-       <el-table-column label="题目类型" width="100" v-if="pageType == 5">
+      <el-table-column label="题目类型" width="100" v-if="pageType == 5">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.id }}</span>
+          <span style="margin-left: 10px">{{ scope.row.type }}</span>
         </template>
       </el-table-column>
       <el-table-column label="题干" min-width="100%" v-if="pageType == 5">
         <template slot-scope="scope">
           <el-collapse v-model="activeName" accordion>
-            <el-collapse-item title="详细内容" :name="scope.row.id">
+            <el-collapse-item title="详细内容" :name="scope.row.qid">
               <span style="margin-left: 10px">{{ scope.row.content }}</span>
             </el-collapse-item>
           </el-collapse>
         </template>
       </el-table-column>
-      <el-table-column label="科目" min-width="100%" v-if="pageType == 4 || pageType == 6">
+      <el-table-column
+        label="科目"
+        min-width="100%"
+        v-if="pageType == 4 || pageType == 6"
+      >
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.id }}</span>
+          <span style="margin-left: 10px">{{ scope.row.subject }}</span>
         </template>
       </el-table-column>
       <el-table-column label="试卷备注" width="200" v-if="pageType == 6">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.id }}</span>
+          <span style="margin-left: 10px">{{ scope.row.details }}</span>
         </template>
       </el-table-column>
       <el-table-column label="总成绩" width="100" v-if="pageType == 4">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.id }}</span>
+          <span style="margin-left: 10px">{{ scope.row.score }}</span>
         </template>
       </el-table-column>
       <el-table-column label="分数" width="100" v-if="pageType == 5">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.id }}</span>
+          <span style="margin-left: 10px">{{ scope.row.score }}</span>
         </template>
       </el-table-column>
       <el-table-column label="所属试卷" width="150" v-if="pageType == 5">
@@ -155,7 +176,7 @@
       </el-table-column>
       <el-table-column label="作答详情" width="100" v-if="pageType == 5">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.id }}</span>
+          <span style="margin-left: 10px">{{ scope.row.details }}</span>
         </template>
       </el-table-column>
 
@@ -180,7 +201,7 @@
               size="mini"
               type="danger"
               @click="handleDelete(scope.$index, scope.row)"
-              v-if="pageType <= 1 || pageType >= 5"
+              v-if="pageType <= 1 || pageType >= 4"
               >删除</el-button
             >
             <el-button
@@ -213,10 +234,23 @@
 </template>
 
 <script>
-import { getAllQuestions, deleteQuestion, checkQuestion } from "../utils/api";
+import {
+  getAllQuestions,
+  deleteQuestion,
+  checkQuestion,
+  getExamRecord,
+  getAnswerRecord,
+  getAllExams,
+} from "../utils/api";
+
+import { mapState, mapActions } from "vuex";
 export default {
   name: "MyTable",
-  props: ["pageType"], //0--所有试题，1--未标注，2--待审核，3--审核通过
+  props: ["pageType"], //0--所有试题，1--未标注，2--待审核，3--审核通过, 4--测试记录，5--答题记录，6--查看试卷
+  computed: {
+    //通过计算属性将Vuex中的state进行简写(this.$store.state.pageStore.currentPage-->currentPage)
+    ...mapState("pageStore", ["currentPage"]),
+  },
   data() {
     return {
       activeName: "", //题干当前激活的面板，支持手风琴模式
@@ -225,6 +259,8 @@ export default {
     };
   },
   methods: {
+    // 将vuex中的actions和mutations简写
+    ...mapActions("pageStore", { setPage: "changePage" }), //pageStore下的actions中的chanePage，简写成setPage方法
     // 标注事件
     handleMark(row) {
       console.log(row);
@@ -235,17 +271,19 @@ export default {
           qType: row.qType,
           time: row.time,
           content: row.content,
+          id:row.id
         },
       });
     },
     // 删除事件
     handleDelete(index, row) {
-      deleteQuestion({
-        id: row.id,
-      }).then((v) => {
-        console.log(v);
-        // 接着需要知道当前页面，再调接口，看完组件间通信接着做
-      });
+      if (this.pageType == 0 || this.pageType == 1) {
+        deleteQuestion({
+          id: row.id,
+        }).then(() => {
+          this.getPageContent(this.currentPage); //删除题之后，刷新当前页内容
+        });
+      }
     },
     // 修改事件
     handleEdit(index, row) {
@@ -256,8 +294,8 @@ export default {
       console.log(index, row);
       checkQuestion({
         id: row.id,
-      }).then((v) => {
-        console.log(v);
+      }).then(() => {
+        this.getPageContent(this.currentPage); //通过题之后，刷新当前页内容
       });
     },
     // 获取当前页内容
@@ -312,16 +350,51 @@ export default {
           this.total = count;
         });
       }
+      // 测试记录的内容
+      if (this.pageType == 4) {
+        getExamRecord({
+          page,
+          limit: 10,
+        }).then((value) => {
+          let { data, count } = value;
+          this.tableData = data;
+          this.total = count;
+        });
+      }
+      // 答题记录的内容
+      if (this.pageType == 5) {
+        getAnswerRecord({
+          page,
+          limit: 10,
+        }).then((value) => {
+          let { data, count } = value;
+          this.tableData = data;
+          this.total = count;
+        });
+      }
+      // 查看试卷的内容
+      if (this.pageType == 6) {
+        getAllExams({
+          page,
+          limit: 10,
+        }).then((value) => {
+          let { data, count } = value;
+          this.tableData = data;
+          this.total = count;
+        });
+      }
     },
     // 改变页码触发事件
     changePage(page) {
       this.getPageContent(page);
+      this.setPage(page); //改变Vuex中的currentPage，其他组件可以获取到当前页
     },
   },
 
   // 在可以获取到data数据时加载
   created() {
     this.getPageContent(1);
+    this.setPage(1); //改变Vuex中的currentPage，其他组件可以获取到当前页
   },
 };
 </script>

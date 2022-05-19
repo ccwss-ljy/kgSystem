@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import { login } from "../utils/api";
+
 export default {
   name: "MyLogin",
   data() {
@@ -53,7 +55,7 @@ export default {
     let checkPassword = (rule, value, callback) => {
       if (!value) {
         callback(new Error("密码不能为空"));
-      } else if (value.length < 6) {
+      } else if (value.length < 3) { //密码限制位数
         callback(new Error("密码不能小于6位"));
       } else {
         callback();
@@ -77,12 +79,17 @@ export default {
     // 提交表单
     onSubmit(formName) {
       this.$refs[formName].validate((valid, obj) => {
-        console.log(valid);
         if (valid) {
-          console.log("前端过滤通过，调接口");
-          this.$router.push({
-            path:'/home'
-          })
+          console.log("前端过滤通过，调接口", this.form.username, this.form.password);
+          login({  //登录接口
+            username:this.form.username,
+            password:this.form.password
+          }).then((v) => {
+            console.log(v)
+            this.$router.push({
+              path: "/home",
+            });
+          });
         } else {
           console.log("未通过字段", obj);
         }
