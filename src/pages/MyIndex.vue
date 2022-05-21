@@ -17,20 +17,7 @@
         <el-button type="text" style="color: white">退出</el-button>
       </div>
       <!-- 对话框 -->
-      <el-dialog
-        title="提示"
-        :visible.sync="dialogVisible"
-        width="30%"
-        :before-close="handleClose"
-      >
-        <span>这是一段信息</span>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible = false"
-            >确 定</el-button
-          >
-        </span>
-      </el-dialog>
+      <MyDialog :dialogVisible="dialogVisible" v-on:getDialogVisible="getDialogVisible"/>
     </el-header>
     <el-container>
       <!-- 导航栏 -->
@@ -102,7 +89,12 @@
 </template>
 
 <script>
+import MyDialog from "@/components/MyDialog.vue";
+
 export default {
+  components: {
+    MyDialog,
+  },
   data() {
     return {
       dialogVisible: false,
@@ -115,6 +107,10 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     },
+    // 从子组件获取dialogVisible的值,并修改
+    getDialogVisible(value){
+      this.dialogVisible = value;
+    }
   },
 };
 </script>

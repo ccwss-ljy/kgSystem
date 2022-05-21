@@ -250,6 +250,21 @@ export default {
   computed: {
     //通过计算属性将Vuex中的state进行简写(this.$store.state.pageStore.currentPage-->currentPage)
     ...mapState("pageStore", ["currentPage"]),
+    //通过计算属性将Vuex中的state进行简写(this.$store.state.selectStore.qType-->qType)
+    ...mapState("selectStore", ["qType"]),
+  },
+  watch: {
+    qType(newData) {
+      getAllQuestions({
+        page: this.currentPage,
+        limit: 10,
+        category: String(newData),
+      }).then((value) => {
+        let { data, count } = value;
+        this.tableData = data;
+        this.total = count;
+      });
+    },
   },
   data() {
     return {
@@ -271,7 +286,7 @@ export default {
           qType: row.qType,
           time: row.time,
           content: row.content,
-          id:row.id
+          id: row.id,
         },
       });
     },
@@ -395,6 +410,17 @@ export default {
   created() {
     this.getPageContent(1);
     this.setPage(1); //改变Vuex中的currentPage，其他组件可以获取到当前页
+    console.log(this.qType);
+  },
+
+  // 页面更新
+  beforeUpdate() {
+    console.log("ahah");
+    console.log(this.qType);
+  },
+  // 页面更新
+  updated() {
+    console.log("ahah");
   },
 };
 </script>

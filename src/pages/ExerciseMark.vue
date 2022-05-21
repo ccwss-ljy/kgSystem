@@ -20,11 +20,18 @@
       :options="options"
       phValue1="请选择能力层级"
       phValue3="请输入题干"
+      v-on:getValue="getValue"
     />
     <el-card
       style="height: 340px; width: 100%; margin: 30px 0 20px 0; overflow: auto"
     >
-      <el-tree :data="data" show-checkbox accordion @check-change="insertId" :check-strictly="true"/>
+      <el-tree
+        :data="data"
+        show-checkbox
+        accordion
+        @check-change="insertId"
+        :check-strictly="true"
+      />
     </el-card>
     <div class="buttonBox">
       <el-button type="primary" @click="nextQuestion">下一题</el-button>
@@ -34,7 +41,11 @@
 </template>
 
 <script>
-import { getRandomUnmarkedQuestion, getKnowledgePointTree, knowledgePointMark } from "../utils/api";
+import {
+  getRandomUnmarkedQuestion,
+  getKnowledgePointTree,
+  knowledgePointMark,
+} from "../utils/api";
 import MyHeader from "@/components/MyHeader.vue";
 
 export default {
@@ -53,67 +64,67 @@ export default {
           content: this.content,
         },
       ],
-      iD:0,
+      iD: null,
       // 选择框内容
       options: [
         {
-          value: "level1",
+          value: "1",
           label: "1.程序设计基本概念",
         },
         {
-          value: "level2",
+          value: "2",
           label: "2.基本元素和表达式",
         },
         {
-          value: "level3",
+          value: "3",
           label: "3.选择结构",
         },
         {
-          value: "level4",
+          value: "4",
           label: "4.循环结构",
         },
         {
-          value: "level5",
+          value: "5",
           label: "5.数组和字符串",
         },
         {
-          value: "level6",
+          value: "6",
           label: "6.函数和初级模块化程序设计",
         },
         {
-          value: "level7",
+          value: "7",
           label: "7.指针及函数参数进阶",
         },
         {
-          value: "level8",
+          value: "8",
           label: "8.指针和数组进阶",
         },
         {
-          value: "level9",
+          value: "9",
           label: "9.模块化程序设计进阶",
         },
         {
-          value: "level10",
+          value: "10",
           label: "10.结构体和链表",
         },
         {
-          value: "level11",
+          value: "11",
           label: "11.文件",
         },
         {
-          value: "level12",
+          value: "12",
           label: "12.较复杂问题的计算思维",
         },
         {
-          value: "level13",
+          value: "13",
           label: "13.需求分析和简单系统设计",
         },
         {
-          value: "level14",
+          value: "14",
           label: "14.详细设计和编程实现",
         },
         {
-          value: "level15",
+          value: "15",
           label: "15.调试、测试和文档",
         },
       ],
@@ -122,13 +133,17 @@ export default {
       data: [],
 
       // 选中的知识点
-      idList:[]
+      idList: [],
+
+      // 选择栏的能力层级的值
+      levelValue: 0,
     };
   },
   methods: {
+    // 下一题
     nextQuestion() {
       getRandomUnmarkedQuestion().then((value) => {
-        let { information, qType, time, content,id } = value.data[0];
+        let { information, qType, time, content, id } = value.data[0];
         this.tableData[0].information = information;
         this.tableData[0].qType = qType;
         this.tableData[0].time = time;
@@ -136,30 +151,39 @@ export default {
         this.iD = id;
       });
     },
-    insertId(node, checked){
-      checked ? this.idList.push(node.id) : this.idList.splice(this.idList.indexOf(node.id), 1) 
-      if(this.idList.length > 3){
-        console.log('不能选了你超了')
+    // 将知识点id插入idList
+    insertId(node, checked) {
+      checked
+        ? this.idList.push(node.id)
+        : this.idList.splice(this.idList.indexOf(node.id), 1);
+      if (this.idList.length > 3) {
+        console.log("不能选了你超了");
       }
     },
-    submit(){
+    // 提交
+    submit() {
       knowledgePointMark({
-        level:1,
-        markData:String(this.idList),
-        qid:this.id || this.iD
-      }).then(v=>{
-        console.log(v)
-        return getRandomUnmarkedQuestion()
+        level: this.levelValue,
+        markData: String(this.idList),
+        qid: this.iD || this.id,
       })
-      .then((value)=>{
-        let { information, qType, time, content,id } = value.data[0];
-        this.tableData[0].information = information;
-        this.tableData[0].qType = qType;
-        this.tableData[0].time = time;
-        this.tableData[0].content = content;
-        this.iD = id;
-      })
-    }
+        .then((v) => {
+          console.log(v);
+          return getRandomUnmarkedQuestion();
+        })
+        .then((value) => {
+          let { information, qType, time, content, id } = value.data[0];
+          this.tableData[0].information = information;
+          this.tableData[0].qType = qType;
+          this.tableData[0].time = time;
+          this.tableData[0].content = content;
+          this.iD = id;
+        });
+    },
+    // 通过子传父获取MyHeader选择栏选择的内容
+    getValue(value) {
+      this.levelValue = value;
+    },
   },
   created() {
     // 如果信息不为undefined，说明是点击标注进入到该页面，那么不调用该接口
